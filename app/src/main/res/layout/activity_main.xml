@@ -11,6 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:maxHeight="@dimen/dp30"
         android:background="@drawable/bg_rounded_corner"
         android:backgroundTint="@color/filter_divider_color"
         app:layout_collapseMode="pin"
@@ -23,7 +24,6 @@
         android:id="@+id/background"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
         android:background="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -74,6 +74,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tabGravity="start"
+            android:background="@color/grey"
             app:tabIndicatorColor="@color/black"
             app:tabIndicatorFullWidth="false"
             app:tabIndicatorGravity="bottom"
@@ -100,17 +101,6 @@
             app:layout_constraintTop_toBottomOf="@id/tab_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--    <View-->
-<!--        android:id="@+id/background"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:background="@color/grey"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/toolbar" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
