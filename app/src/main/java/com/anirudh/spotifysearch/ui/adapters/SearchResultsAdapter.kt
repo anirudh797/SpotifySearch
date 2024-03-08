@@ -45,7 +45,9 @@ class SearchResultsAdapter(val onItemClick: (ItemInfo) -> Unit) :
             when (item) {
                 is AlbumItem -> {
                     (item).apply {
-                        Glide.with(holder.itemView.context).load(item.images[0].url).into(iv)
+                        item.images.getOrNull(0)?.let {
+                            Glide.with(holder.itemView.context).load(it.url).into(iv)
+                        }
                         tvName.text = item.name
                         tvType.text = item.type
                     }
@@ -61,7 +63,9 @@ class SearchResultsAdapter(val onItemClick: (ItemInfo) -> Unit) :
 
                 is PlaylistItem -> {
                     (item).apply {
-                        Glide.with(holder.itemView.context).load(item.images[0].url).into(iv)
+                        item.images.getOrNull(0)?.let {
+                            Glide.with(holder.itemView.context).load(it.url).into(iv)
+                        }
                         tvName.text = item.name
                         tvType.text = item.type
                     }
@@ -69,7 +73,9 @@ class SearchResultsAdapter(val onItemClick: (ItemInfo) -> Unit) :
 
                 is ArtistInfo -> {
                     (item).apply {
-                        Glide.with(holder.itemView.context).load(item.images[0].url).into(iv)
+                        item.images.getOrNull(0)?.let {
+                            Glide.with(holder.itemView.context).load(it.url).into(iv)
+                        }
                         tvName.text = item.name
                         tvType.text = item.type
                     }

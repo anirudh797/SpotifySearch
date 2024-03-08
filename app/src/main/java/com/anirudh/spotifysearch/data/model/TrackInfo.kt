@@ -1,12 +1,14 @@
 package com.anirudh.spotifysearch.data.model
 
-import java.io.Serializable
-
-data class Owner(
-    val display_name: String,
+data class TrackInfo(
     val external_urls: ExternalUrls,
+    val followers: Followers,
+    val genres: List<String>,
     val href: String,
     val id: String,
+    val images: List<Image>,
+    val name: String,
+    val popularity: Int,
     val type: String,
     val uri: String
-) : Serializable
+)

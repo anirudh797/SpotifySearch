@@ -2,8 +2,10 @@ package com.anirudh.spotifysearch.data
 
 import com.anirudh.spotifysearch.data.model.AlbumDetails
 import com.anirudh.spotifysearch.data.model.ArtistDetail
+import com.anirudh.spotifysearch.data.model.PlaylistDetail
 import com.anirudh.spotifysearch.data.model.SearchResults
 import com.anirudh.spotifysearch.data.model.TokenApiResponse
+import com.anirudh.spotifysearch.data.model.TrackInfo
 import com.anirudh.spotifysearch.data.remote.AccountsApi
 import com.anirudh.spotifysearch.data.remote.SpotifyApi
 import retrofit2.Response
@@ -23,6 +25,14 @@ class SearchRepository @Inject constructor(
 
     override suspend fun getArtistDetails(id: String): Response<ArtistDetail> {
         return spotifyApi.getArtistDetails(id = id)
+    }
+
+    override suspend fun getPlaylistDetails(id: String): Response<PlaylistDetail> {
+        return spotifyApi.getPlaylistDetails(id = id)
+    }
+
+    override suspend fun getTrackDetails(id: String): Response<TrackInfo> {
+        return spotifyApi.getTrackDetails(id = id)
     }
 
 

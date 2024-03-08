@@ -5,7 +5,7 @@ import java.io.Serializable
 data class Album(
     val album_type: String,
     val artists: List<Artist>,
-    val external_urls: ExternalUrlsX,
+    val external_urls: ExternalUrls,
     val href: String,
     val id: String,
     val images: List<Image>,

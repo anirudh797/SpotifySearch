@@ -1,13 +1,18 @@
 package com.anirudh.spotifysearch.data.model
 
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class SearchResults(
+
     val albums: Albums,
     val artists: Artists,
     val playlists: Playlists,
     val tracks: Tracks
-)
+){
+
+}
 
 sealed class CategoryType(val key: String) {
     data class Tracks(@SerializedName("tracks") val tracks: String) : CategoryType(tracks)

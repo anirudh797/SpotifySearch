@@ -2,8 +2,10 @@ package com.anirudh.spotifysearch.data.remote
 
 import com.anirudh.spotifysearch.data.model.AlbumDetails
 import com.anirudh.spotifysearch.data.model.ArtistDetail
+import com.anirudh.spotifysearch.data.model.PlaylistDetail
 import com.anirudh.spotifysearch.data.model.SearchResults
 import com.anirudh.spotifysearch.data.model.TokenApiResponse
+import com.anirudh.spotifysearch.data.model.TrackInfo
 import com.anirudh.spotifysearch.util.Constants
 import retrofit2.Response
 import retrofit2.http.Field
@@ -52,12 +54,19 @@ interface SpotifyApi {
         @Query("market") market: String = MARKET,
     ): Response<ArtistDetail>
 
-    @GET("v1/tracks")
+    @GET("v1/tracks/{id}")
     suspend fun getTrackDetails(
         @Header("Authorization") accessToken: String = ACCESS_TOKEN,
-        @Query("id") query: String,
+        @Path("id") id: String,
         @Query("market") market: String = MARKET,
-    ): Response<SearchResults>
+    ): Response<TrackInfo>
+
+    @GET("v1/playlists/{id}")
+    suspend fun getPlaylistDetails(
+        @Header("Authorization") accessToken: String = ACCESS_TOKEN,
+        @Path("id") id: String,
+        @Query("market") market: String = MARKET,
+    ): Response<PlaylistDetail>
 }
 
 interface AccountsApi {

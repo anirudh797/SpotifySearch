@@ -42,7 +42,9 @@ class DetailActivity : AppCompatActivity() {
     private fun setupObservers() {
         viewModel.albumDetail.observe(this) {
             binding.apply {
-                Glide.with(this@DetailActivity).load(it.images[0].url).into(iv)
+                it.images.getOrNull(0)?.let {
+                    Glide.with(this@DetailActivity).load(it.url).into(iv)
+                }
                 tvId.text = it.id
                 tvName.text = it.name
                 tvType.text = it.type
@@ -51,7 +53,29 @@ class DetailActivity : AppCompatActivity() {
 
         viewModel.artistsInfo.observe(this) {
             binding.apply {
-                Glide.with(this@DetailActivity).load(it.images[0].url).into(iv)
+                it.images.getOrNull(0)?.let {
+                    Glide.with(this@DetailActivity).load(it.url).into(iv)
+                }
+                tvId.text = it.id
+                tvName.text = it.name
+                tvType.text = it.type
+            }
+        }
+
+        viewModel.playlistDetail.observe(this) {
+            binding.apply {
+                it.images.getOrNull(0)?.let {
+                    Glide.with(this@DetailActivity).load(it.url).into(iv)
+                }
+                tvId.text = it.id
+                tvName.text = it.name
+                tvType.text = it.type
+            }
+        }
+
+        viewModel.trackDetail.observe(this) {
+            binding.apply {
+                iv.setImageResource(R.drawable.baseline_audiotrack_24)
                 tvId.text = it.id
                 tvName.text = it.name
                 tvType.text = it.type
@@ -71,22 +95,15 @@ class DetailActivity : AppCompatActivity() {
 
                 is TrackItem -> {
                     (item as TrackItem).apply {
-                        iv.setImageResource(R.drawable.baseline_audiotrack_24)
-                        tvId.text = id
-                        tvName.text = item.name
-                        tvType.text = item.type
+                        viewModel.getTrackDetails(id)
                     }
-                    viewModel.getTrackDetails(item.id)
+
                 }
 
                 is PlaylistItem -> {
                     (item as PlaylistItem).apply {
-                        Glide.with(this@DetailActivity).load(item.images[0].url).into(iv)
-                        tvId.text = id
-                        tvName.text = item.name
-                        tvType.text = item.type
+                        viewModel.getPlaylistDetails(item.id)
                     }
-                    viewModel.getPlaylistDetails(item.id)
                 }
 
                 is ArtistInfo -> {

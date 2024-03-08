@@ -1,23 +1,18 @@
 package com.anirudh.spotifysearch.data.model
 
-data class AlbumDetails(
+data class AlbumX(
     val album_type: String,
     val artists: List<Artist>,
-    val copyrights: List<Copyright>,
-    val external_ids: ExternalIds,
+    val available_markets: List<String>,
     val external_urls: ExternalUrls,
-    val genres: List<Any>,
     val href: String,
     val id: String,
     val images: List<Image>,
-    val is_playable: Boolean,
-    val label: String,
     val name: String,
-    val popularity: Int,
     val release_date: String,
     val release_date_precision: String,
+    val restrictions: Restrictions,
     val total_tracks: Int,
-    val tracks: Tracks,
     val type: String,
     val uri: String
 )

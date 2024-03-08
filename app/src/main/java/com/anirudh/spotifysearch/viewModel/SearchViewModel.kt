@@ -11,8 +11,10 @@ import com.anirudh.spotifysearch.data.model.AlbumItem
 import com.anirudh.spotifysearch.data.model.ArtistDetail
 import com.anirudh.spotifysearch.data.model.ArtistInfo
 import com.anirudh.spotifysearch.data.model.CategoryType
+import com.anirudh.spotifysearch.data.model.PlaylistDetail
 import com.anirudh.spotifysearch.data.model.PlaylistItem
 import com.anirudh.spotifysearch.data.model.SearchResults
+import com.anirudh.spotifysearch.data.model.TrackInfo
 import com.anirudh.spotifysearch.data.model.TrackItem
 import com.anirudh.spotifysearch.data.model.Tracks
 import com.anirudh.spotifysearch.util.Constants
@@ -35,23 +37,22 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
     private var _categories = MutableLiveData<List<CategoryType>>()
     val categories: MutableLiveData<List<CategoryType>> = _categories
 
-    //    private var _playlistItems = MutableLiveData<List<PlaylistItem>>()
-//    val playlistItems: LiveData<List<PlaylistItem>> = _playlistItems
-//
-//    private var _tracks = MutableLiveData<List<TrackItem>>()
-//    val tracks: LiveData<List<TrackItem>> = _tracks
-//
+    private var _playlistItems = MutableLiveData<PlaylistDetail>()
+    val playlistDetail: LiveData<PlaylistDetail> = _playlistItems
+
+    private var _trackDetail = MutableLiveData<TrackInfo>()
+    val trackDetail: LiveData<TrackInfo> = _trackDetail
+
     private var _albumDetails = MutableLiveData<AlbumDetails>()
     val albumDetail: LiveData<AlbumDetails> = _albumDetails
 
-    //
     private var _artistsInfo = MutableLiveData<ArtistDetail>()
     val artistsInfo: LiveData<ArtistDetail> = _artistsInfo
-//
+
     fun getSearchResults(query: String) {
-    Log.d("Anirudh","Outside coroutines")
-    viewModelScope.launch(Dispatchers.Default) {
-            Log.d("Anirudh","$query search")
+        Log.d("Anirudh", "Outside coroutines")
+        viewModelScope.launch(Dispatchers.Default) {
+            Log.d("Anirudh", "$query search")
             _loadingProgressLiveData.postValue(true)
             val result = searchRepository.getAllSearchResults(query = query)
             if (result.isSuccessful) {
@@ -61,10 +62,10 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
                     prepareCategoriesList(results)
                 }
                 _searchResults.postValue(results)
-                Log.d("Anirudh","$query success")
+                Log.d("Anirudh", "$query success")
             } else {
                 _loadingProgressLiveData.postValue(false)
-                Log.d("Anirudh","$query failure")
+                Log.d("Anirudh", "$query failure")
             }
         }
     }
@@ -118,29 +119,27 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
         }
     }
 
-    fun getTrackDetails(trackId: String) {
+    fun getPlaylistDetails(playlistId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = searchRepository.getAlbumDetails(trackId)
+            val result = searchRepository.getPlaylistDetails(playlistId)
             if (result.isSuccessful) {
-                _albumDetails.postValue(result.body())
+                _playlistItems.postValue(result.body())
             } else {
                 //nothing
             }
         }
     }
 
-    fun getPlaylistDetails(trackId: String) {
+    fun getTrackDetails(playlistId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = searchRepository.getAlbumDetails(trackId)
+            val result = searchRepository.getTrackDetails(playlistId)
             if (result.isSuccessful) {
-                _albumDetails.postValue(result.body())
+                _trackDetail.postValue(result.body())
             } else {
                 //nothing
             }
         }
     }
-
-
 
     fun updateApiAccessToken() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -155,7 +154,6 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
     }
 
     override fun onCleared() {
-        Log.d("Anirudh","Cleared VM")
         super.onCleared()
     }
 

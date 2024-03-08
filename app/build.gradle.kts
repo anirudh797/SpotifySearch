@@ -47,7 +47,6 @@ android {
 
 dependencies {
 
-//    implementation ("com.spotify.android:auth:1.1.0")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
@@ -71,10 +70,15 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 
-    /* Android Architecture Component - Room Persistance Lib  */
-//    implementation ("android.arch.persistence.room:runtime:1.1.1")
-//    implementation ("android.arch.persistence.room:rxjava2:1.1.1")
-//    annotationProcessor ("android.arch.persistence.room:compiler:1.1.1")
+    implementation("androidx.room:room-runtime:2.5.2")
+    annotationProcessor("androidx.room:room-compiler:2.5.2")
+
+    kapt("androidx.room:room-compiler:2.5.2")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
+
+    implementation("androidx.room:room-ktx:2.5.2")
+
 
     /* Dagger2 - We are going to use dagger.android which includes
      * support for Activity and fragment injection so we need to include
