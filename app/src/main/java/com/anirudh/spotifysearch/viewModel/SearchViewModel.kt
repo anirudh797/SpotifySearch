@@ -46,7 +46,7 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
 //    val artistsInfo: LiveData<List<ArtistInfo>> = _artistsInfo
 //
     fun getSearchResults(query: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             _loadingProgressLiveData.postValue(true)
             val result = searchRepository.getAllSearchResults(query = query)
             if (result.isSuccessful) {
@@ -99,6 +99,10 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
             }
 
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
     }
 
     private fun updateCategoriesData() {

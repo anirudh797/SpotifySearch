@@ -3,6 +3,7 @@ package com.anirudh.spotifysearch.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.anirudh.spotifysearch.R
 import com.anirudh.spotifysearch.data.model.AlbumItem
 import com.anirudh.spotifysearch.data.model.ArtistInfo
 import com.anirudh.spotifysearch.data.model.ItemInfo
@@ -52,7 +53,7 @@ class SearchResultsAdapter(val onItemClick: (ItemInfo) -> Unit) :
 
                 is TrackItem -> {
                     (item).apply {
-        //                        Glide.with(holder.itemView.context).load(item.images[0].url).into(iv)
+                        iv.setImageResource(R.drawable.baseline_audiotrack_24)
                         tvName.text = item.name
                         tvType.text = item.type
                     }

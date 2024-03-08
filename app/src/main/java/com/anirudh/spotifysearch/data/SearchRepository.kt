@@ -9,7 +9,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 
-class SearchRepository @Inject constructor(val spotifyApi: SpotifyApi, val accountsApi: AccountsApi) : ISearchRepository {
+class SearchRepository @Inject constructor(private val spotifyApi: SpotifyApi, private val accountsApi: AccountsApi) : ISearchRepository {
     override suspend fun getAllSearchResults(query: String): Response<SearchResults> {
         return spotifyApi.getSearchResults(query = query)
     }

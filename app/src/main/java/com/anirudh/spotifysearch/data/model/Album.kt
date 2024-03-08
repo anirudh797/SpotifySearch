@@ -1,5 +1,7 @@
 package com.anirudh.spotifysearch.data.model
 
+import java.io.Serializable
+
 data class Album(
     val album_type: String,
     val artists: List<Artist>,
@@ -14,4 +16,4 @@ data class Album(
     val total_tracks: Int,
     val type: String,
     val uri: String
-)
+) : Serializable

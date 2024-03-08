@@ -8,4 +8,6 @@ object Constants {
     val TRACKS = "TRACKS"
     val PLAYLISTS = "PLAYLISTS"
     val ARTISTS = "ARTISTS"
+    val ITEM_INFO = "ItemInfo"
+    val BUNDLE_INFO = "BundleInfo"
 }

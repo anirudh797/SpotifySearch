@@ -1,5 +1,7 @@
 package com.anirudh.spotifysearch.data.model
 
+import java.io.Serializable
+
 data class Owner(
     val display_name: String,
     val external_urls: ExternalUrlsX,
@@ -7,4 +9,4 @@ data class Owner(
     val id: String,
     val type: String,
     val uri: String
-)
+) : Serializable

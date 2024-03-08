@@ -1,6 +1,9 @@
 package com.anirudh.spotifysearch.data.model
 
-interface ItemInfo
+import android.os.Parcelable
+import java.io.Serializable
+
+interface ItemInfo : Serializable
 data class AlbumItem(
     val album_type: String,
     val artists: List<Artist>,
@@ -16,9 +19,9 @@ data class AlbumItem(
     val type: String,
     val uri: String,
     val itemType: ItemType = ItemType.ALBUM
-) : ItemInfo
+) : ItemInfo, Serializable
 
-enum class ItemType {
+enum class ItemType : Serializable {
     ALBUM, TRACK, PLAYLIST, ARTIST
 }
 
@@ -38,7 +41,7 @@ data class PlaylistItem(
     val type: String,
     val uri: String,
     val itemType: ItemType = ItemType.PLAYLIST
-) : ItemInfo
+) : ItemInfo, Serializable
 
 data class ArtistInfo(
     val external_urls: ExternalUrlsX,
@@ -52,7 +55,7 @@ data class ArtistInfo(
     val type: String,
     val uri: String,
     val itemType: ItemType = ItemType.ARTIST
-) : ItemInfo
+) : ItemInfo, Serializable
 
 data class TrackItem(
     val album: Album,
@@ -73,4 +76,4 @@ data class TrackItem(
     val type: String,
     val uri: String,
     val itemType: ItemType = ItemType.TRACK
-) : ItemInfo
+) : ItemInfo, Serializable
