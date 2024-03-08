@@ -6,10 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.anirudh.spotifysearch.MainActivity
 import com.anirudh.spotifysearch.databinding.FragmentSearchResultsBinding
 import com.anirudh.spotifysearch.ui.adapters.SearchResultsAdapter
 import com.anirudh.spotifysearch.viewModel.SearchViewModel

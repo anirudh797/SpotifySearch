@@ -1,6 +1,6 @@
 package com.anirudh.spotifysearch.di.module
 
-import com.anirudh.spotifysearch.MainActivity
+import com.anirudh.spotifysearch.ui.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

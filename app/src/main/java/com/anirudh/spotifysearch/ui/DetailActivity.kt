@@ -1,8 +1,8 @@
-package com.anirudh.spotifysearch
+package com.anirudh.spotifysearch.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
+import com.anirudh.spotifysearch.R
 import com.anirudh.spotifysearch.data.model.AlbumItem
 import com.anirudh.spotifysearch.data.model.ArtistInfo
 import com.anirudh.spotifysearch.data.model.ItemInfo
