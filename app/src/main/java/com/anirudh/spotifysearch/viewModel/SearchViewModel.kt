@@ -1,11 +1,14 @@
 package com.anirudh.spotifysearch.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anirudh.spotifysearch.data.SearchRepository
+import com.anirudh.spotifysearch.data.model.AlbumDetails
 import com.anirudh.spotifysearch.data.model.AlbumItem
+import com.anirudh.spotifysearch.data.model.ArtistDetail
 import com.anirudh.spotifysearch.data.model.ArtistInfo
 import com.anirudh.spotifysearch.data.model.CategoryType
 import com.anirudh.spotifysearch.data.model.PlaylistItem
@@ -26,27 +29,29 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
     private var _loadingProgressLiveData = MutableLiveData(false)
     var loadingProgressLiveData: LiveData<Boolean> = _loadingProgressLiveData
 
-    //
     private var _searchResults = MutableLiveData<SearchResults?>()
     val searchResults: MutableLiveData<SearchResults?> = _searchResults
 
     private var _categories = MutableLiveData<List<CategoryType>>()
     val categories: MutableLiveData<List<CategoryType>> = _categories
 
-//    private var _playlistItems = MutableLiveData<List<PlaylistItem>>()
+    //    private var _playlistItems = MutableLiveData<List<PlaylistItem>>()
 //    val playlistItems: LiveData<List<PlaylistItem>> = _playlistItems
 //
 //    private var _tracks = MutableLiveData<List<TrackItem>>()
 //    val tracks: LiveData<List<TrackItem>> = _tracks
 //
-//    private var _albumItems = MutableLiveData<List<AlbumItem>>()
-//    val albumItems: LiveData<List<AlbumItem>> = _albumItems
-//
-//    private var _artistsInfo = MutableLiveData<List<ArtistInfo>>()
-//    val artistsInfo: LiveData<List<ArtistInfo>> = _artistsInfo
+    private var _albumDetails = MutableLiveData<AlbumDetails>()
+    val albumDetail: LiveData<AlbumDetails> = _albumDetails
+
+    //
+    private var _artistsInfo = MutableLiveData<ArtistDetail>()
+    val artistsInfo: LiveData<ArtistDetail> = _artistsInfo
 //
     fun getSearchResults(query: String) {
-        viewModelScope.launch(Dispatchers.Default) {
+    Log.d("Anirudh","Outside coroutines")
+    viewModelScope.launch(Dispatchers.Default) {
+            Log.d("Anirudh","$query search")
             _loadingProgressLiveData.postValue(true)
             val result = searchRepository.getAllSearchResults(query = query)
             if (result.isSuccessful) {
@@ -56,8 +61,10 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
                     prepareCategoriesList(results)
                 }
                 _searchResults.postValue(results)
+                Log.d("Anirudh","$query success")
             } else {
                 _loadingProgressLiveData.postValue(false)
+                Log.d("Anirudh","$query failure")
             }
         }
     }
@@ -89,6 +96,52 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
 
     }
 
+    fun getAlbumDetails(albumId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = searchRepository.getAlbumDetails(albumId)
+            if (result.isSuccessful) {
+                _albumDetails.postValue(result.body())
+            } else {
+                //nothing
+            }
+        }
+    }
+
+    fun getArtistDetails(artistId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = searchRepository.getArtistDetails(artistId)
+            if (result.isSuccessful) {
+                _artistsInfo.postValue(result.body())
+            } else {
+                //nothing
+            }
+        }
+    }
+
+    fun getTrackDetails(trackId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = searchRepository.getAlbumDetails(trackId)
+            if (result.isSuccessful) {
+                _albumDetails.postValue(result.body())
+            } else {
+                //nothing
+            }
+        }
+    }
+
+    fun getPlaylistDetails(trackId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = searchRepository.getAlbumDetails(trackId)
+            if (result.isSuccessful) {
+                _albumDetails.postValue(result.body())
+            } else {
+                //nothing
+            }
+        }
+    }
+
+
+
     fun updateApiAccessToken() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = searchRepository.getApiAccessToken()
@@ -102,17 +155,8 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
     }
 
     override fun onCleared() {
+        Log.d("Anirudh","Cleared VM")
         super.onCleared()
     }
-
-    private fun updateCategoriesData() {
-//        _searchResults.value.let {
-//            _albumItems.postValue(it?.albums?.albumItems)
-//            _tracks.postValue(it?.tracks?.items)
-//            _playlistItems.postValue(it?.playlists?.items)
-//            _artistsInfo.postValue(it?.artists?.items)
-//        }
-    }
-
 
 }

@@ -1,5 +1,7 @@
 package com.anirudh.spotifysearch.data.remote
 
+import com.anirudh.spotifysearch.data.model.AlbumDetails
+import com.anirudh.spotifysearch.data.model.ArtistDetail
 import com.anirudh.spotifysearch.data.model.SearchResults
 import com.anirudh.spotifysearch.data.model.TokenApiResponse
 import com.anirudh.spotifysearch.util.Constants
@@ -9,8 +11,8 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
-import kotlin.reflect.typeOf
 
 interface SpotifyApi {
 
@@ -35,11 +37,30 @@ interface SpotifyApi {
     ): Response<SearchResults>
 
 
+    @GET("v1/albums/{id}")
+    suspend fun getAlbumDetails(
+        @Header("Authorization") accessToken: String = ACCESS_TOKEN,
+        @Path("id") id: String,
+        @Query("market") market: String = MARKET,
+    ): Response<AlbumDetails>
 
 
+    @GET("v1/artists/{id}")
+    suspend fun getArtistDetails(
+        @Header("Authorization") accessToken: String = ACCESS_TOKEN,
+        @Path("id") id: String,
+        @Query("market") market: String = MARKET,
+    ): Response<ArtistDetail>
+
+    @GET("v1/tracks")
+    suspend fun getTrackDetails(
+        @Header("Authorization") accessToken: String = ACCESS_TOKEN,
+        @Query("id") query: String,
+        @Query("market") market: String = MARKET,
+    ): Response<SearchResults>
 }
 
-interface AccountsApi{
+interface AccountsApi {
     @FormUrlEncoded
     @POST("api/token")
     suspend fun getAccessToken(

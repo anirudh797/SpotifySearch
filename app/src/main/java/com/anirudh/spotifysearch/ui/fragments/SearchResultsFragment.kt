@@ -35,12 +35,14 @@ abstract class SearchResultsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchResultsBinding.inflate(layoutInflater, container, false)
+
         return binding.root
     }
 
     private fun getViewModel(): SearchViewModel {
         searchViewModel =
-            ViewModelProvider(this, searchViewModelFactory)[SearchViewModel::class.java]
+            activity?.viewModelStore?.let { ViewModelProvider(it, searchViewModelFactory) }?.get(SearchViewModel::class.java) ?:
+                    ViewModelProvider(this, searchViewModelFactory)[SearchViewModel::class.java]
 
         return searchViewModel
     }
@@ -55,6 +57,10 @@ abstract class SearchResultsFragment : Fragment() {
             adapter = getResultsAdapter()
             layoutManager = GridLayoutManager(requireContext(), 2)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     abstract fun getResultsAdapter(): SearchResultsAdapter

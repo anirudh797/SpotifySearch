@@ -1,6 +1,7 @@
 package com.anirudh.spotifysearch.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -69,6 +70,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         // Inflate menu with items using MenuInflator
         val inflater = menuInflater
         inflater.inflate(R.menu.menu, menu)
+        Log.d("Anirudh","setHasOptionsMenu ")
 
         // Initialise menu item search bar
         // with id and take its object
