@@ -3,11 +3,11 @@
 
 
     <style name="holdingsHeader">
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textSize">32sp</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:background">@color/purple</item>
+<!--        <item name="android:background">@color/grey</item>-->
 
     </style>
 

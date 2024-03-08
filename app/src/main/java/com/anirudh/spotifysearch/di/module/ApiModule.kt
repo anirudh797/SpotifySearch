@@ -24,49 +24,23 @@ class ApiModule {
         return gsonBuilder.create()
     }
 
-    @Provides
-    @Singleton
-    internal fun provideRetrofitApi(): SpotifyApi {
-        val api = RetrofitInstance.api
-        return api
-    }
 
     @Provides
     @Singleton
-    internal fun provideAccountsApi(): AccountsApi {
-        val api = RetrofitInstance.accountsAPi
-        return api
-    }
-
-    @Provides
-    @Singleton
-    internal fun provideRetrofitSearch(gson: Gson): Retrofit {
+    fun provideSearchApiService(gson: Gson): SpotifyApi {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(RetrofitInstance.BASE_URL)
-            .build()
+            .build().create(SpotifyApi::class.java)
     }
 
     @Provides
     @Singleton
-    internal fun provideRetrofitAccount(gson: Gson): Retrofit {
+    fun provideAccountsApiService(gson: Gson): AccountsApi {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(RetrofitInstance.ACCOUNTS_BASE_URL)
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideSearchApiService(retrofit: Retrofit): SpotifyApi? {
-        return retrofit.create(SpotifyApi::class.java)
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideAccountsApiService(retrofit: Retrofit): AccountsApi? {
-        return retrofit.create(AccountsApi::class.java)
+            .build().create(AccountsApi::class.java)
     }
 
 }

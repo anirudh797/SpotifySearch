@@ -4,6 +4,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.anirudh.spotifysearch.data.model.CategoryType
+import com.anirudh.spotifysearch.ui.fragments.AlbumsFragment
+import com.anirudh.spotifysearch.ui.fragments.ArtistsFragment
+import com.anirudh.spotifysearch.ui.fragments.PlaylistsFragment
+import com.anirudh.spotifysearch.ui.fragments.TracksFragment
 import com.anirudh.spotifysearch.viewModel.SearchViewModel
 
 class CategoryAdapter(

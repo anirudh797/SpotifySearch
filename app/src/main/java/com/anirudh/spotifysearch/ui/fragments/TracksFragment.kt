@@ -1,17 +1,15 @@
-package com.anirudh.spotifysearch.ui.adapters
+package com.anirudh.spotifysearch.ui.fragments
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.lifecycleScope
 
-import androidx.recyclerview.widget.RecyclerView
 import com.anirudh.spotifysearch.data.model.ItemInfo
-import com.anirudh.spotifysearch.ui.fragments.SearchResultsFragment
+import com.anirudh.spotifysearch.ui.adapters.SearchResultsAdapter
 
 
 class TracksFragment : SearchResultsFragment() {
 
-    private var adapter: SearchResultsAdapter? = null
+    lateinit var adapter: SearchResultsAdapter
 
     companion object {
         fun newInstance(): TracksFragment {
@@ -29,12 +27,15 @@ class TracksFragment : SearchResultsFragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         adapter = SearchResultsAdapter {
+        }
+        super.onViewCreated(view, savedInstanceState)
+        searchViewModel.searchResults.observe(viewLifecycleOwner) {
+            it?.tracks?.items?.let { items -> adapter.updateList(items) }
+        }
+    }
 
-        }
-        searchViewModel.tracks.observe(viewLifecycleOwner) {
-            adapter?.updateList(it)
-        }
+    override fun getResultsAdapter(): SearchResultsAdapter {
+        return adapter
     }
 }

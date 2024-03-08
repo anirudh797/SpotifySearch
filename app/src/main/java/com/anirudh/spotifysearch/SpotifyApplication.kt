@@ -1,7 +1,8 @@
-package com.anirudh.spotifysearch.di
+package com.anirudh.spotifysearch
 
 import android.app.Activity
 import android.app.Application
+import com.anirudh.spotifysearch.di.DaggerAppComponent
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject

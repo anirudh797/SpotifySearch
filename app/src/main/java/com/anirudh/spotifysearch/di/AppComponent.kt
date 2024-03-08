@@ -1,8 +1,10 @@
 package com.anirudh.spotifysearch.di
 
 import android.app.Application
+import com.anirudh.spotifysearch.SpotifyApplication
 import com.anirudh.spotifysearch.di.module.ActivityModule
 import com.anirudh.spotifysearch.di.module.ApiModule
+import com.anirudh.spotifysearch.di.module.FragmentModule
 import com.anirudh.spotifysearch.di.module.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
@@ -15,6 +17,7 @@ import javax.inject.Singleton
         ApiModule::class,
         ViewModelModule::class,
         ActivityModule::class,
+        FragmentModule::class,
         AndroidSupportInjectionModule::class]
 )
 @Singleton

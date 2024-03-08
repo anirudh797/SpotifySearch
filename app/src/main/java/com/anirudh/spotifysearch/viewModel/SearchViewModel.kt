@@ -14,14 +14,17 @@ import com.anirudh.spotifysearch.data.model.TrackItem
 import com.anirudh.spotifysearch.data.model.Tracks
 import com.anirudh.spotifysearch.util.Constants
 import com.anirudh.upstox.data.remote.RetrofitInstance
+import dagger.Reusable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SearchViewModel @Inject constructor(private val searchRepository: SearchRepository) : ViewModel() {
+@Reusable
+class SearchViewModel @Inject constructor(private val searchRepository: SearchRepository) :
+    ViewModel() {
 
     private var _loadingProgressLiveData = MutableLiveData(false)
-    var loadingProgressFlow: LiveData<Boolean> = _loadingProgressLiveData
+    var loadingProgressLiveData: LiveData<Boolean> = _loadingProgressLiveData
 
     //
     private var _searchResults = MutableLiveData<SearchResults?>()
@@ -30,19 +33,18 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
     private var _categories = MutableLiveData<List<CategoryType>>()
     val categories: MutableLiveData<List<CategoryType>> = _categories
 
-    private var _playlistItems = MutableLiveData<List<PlaylistItem>>()
-    val playlistItems: MutableLiveData<List<PlaylistItem>> = _playlistItems
-
-    private var _tracks = MutableLiveData<List<TrackItem>>()
-    val tracks: MutableLiveData<List<TrackItem>> = _tracks
-
-    private var _albumItems = MutableLiveData<List<AlbumItem>>()
-    val albumItems: MutableLiveData<List<AlbumItem>> = _albumItems
-
-    private var _artistsInfo = MutableLiveData<List<ArtistInfo>>()
-    val artistsInfo: MutableLiveData<List<ArtistInfo>> = _artistsInfo
-
-    //
+//    private var _playlistItems = MutableLiveData<List<PlaylistItem>>()
+//    val playlistItems: LiveData<List<PlaylistItem>> = _playlistItems
+//
+//    private var _tracks = MutableLiveData<List<TrackItem>>()
+//    val tracks: LiveData<List<TrackItem>> = _tracks
+//
+//    private var _albumItems = MutableLiveData<List<AlbumItem>>()
+//    val albumItems: LiveData<List<AlbumItem>> = _albumItems
+//
+//    private var _artistsInfo = MutableLiveData<List<ArtistInfo>>()
+//    val artistsInfo: LiveData<List<ArtistInfo>> = _artistsInfo
+//
     fun getSearchResults(query: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _loadingProgressLiveData.postValue(true)
@@ -99,13 +101,13 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
         }
     }
 
-    fun updateCategoriesData() {
-        _searchResults.value.let {
-            _albumItems.postValue(it?.albums?.albumItems)
-            _tracks.postValue(it?.tracks?.items)
-            _playlistItems.postValue(it?.playlists?.items)
-            _artistsInfo.postValue(it?.artists?.items)
-        }
+    private fun updateCategoriesData() {
+//        _searchResults.value.let {
+//            _albumItems.postValue(it?.albums?.albumItems)
+//            _tracks.postValue(it?.tracks?.items)
+//            _playlistItems.postValue(it?.playlists?.items)
+//            _artistsInfo.postValue(it?.artists?.items)
+//        }
     }
 
 

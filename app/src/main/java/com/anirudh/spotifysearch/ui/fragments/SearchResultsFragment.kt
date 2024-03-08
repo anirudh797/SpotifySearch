@@ -6,25 +6,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.anirudh.spotifysearch.SearchViewModelFactory
-import com.anirudh.spotifysearch.data.SearchRepository
+import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.anirudh.spotifysearch.MainActivity
 import com.anirudh.spotifysearch.databinding.FragmentSearchResultsBinding
+import com.anirudh.spotifysearch.ui.adapters.SearchResultsAdapter
 import com.anirudh.spotifysearch.viewModel.SearchViewModel
-import com.anirudh.upstox.data.remote.RetrofitInstance
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 
 abstract class SearchResultsFragment : Fragment() {
 
-    //    @Inject
-    lateinit var searchViewModelFactory: SearchViewModelFactory
+    @Inject
+    lateinit var searchViewModelFactory: ViewModelProvider.Factory
 
     lateinit var searchViewModel: SearchViewModel
     private lateinit var binding: FragmentSearchResultsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidSupportInjection.inject(this)
         searchViewModel = getViewModel()
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,15 +42,9 @@ abstract class SearchResultsFragment : Fragment() {
     }
 
     private fun getViewModel(): SearchViewModel {
-//        val viewModelProviderFactory =
-//            ViewModelProviderFactory(
-//                SearchRepository(
-//                    RetrofitInstance.api,
-//                    RetrofitInstance.accountsAPi
-//                )
-//            )
-//        searchViewModel =
-//            ViewModelProvider(this, viewModelProviderFactory)[SearchViewModel::class.java]
+        searchViewModel =
+            ViewModelProvider(this, searchViewModelFactory)[SearchViewModel::class.java]
+
         return searchViewModel
     }
 
@@ -54,7 +54,12 @@ abstract class SearchResultsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rv.apply {
+            adapter = getResultsAdapter()
+            layoutManager = GridLayoutManager(requireContext(), 2)
+        }
     }
 
-//    abstract fun getAdapter(): Adapter<RecyclerView.Adapter<>>
+    abstract fun getResultsAdapter(): SearchResultsAdapter
+
 }
