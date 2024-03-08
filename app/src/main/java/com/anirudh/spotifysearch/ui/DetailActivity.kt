@@ -21,14 +21,13 @@ class DetailActivity : AppCompatActivity() {
     lateinit var itemInfo: ItemInfo
     lateinit var binding: ActivityDetailBinding
 
+
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var viewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, viewModelFactory)[SearchViewModel::class.java]
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
