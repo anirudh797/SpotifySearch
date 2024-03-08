@@ -1,5 +1,6 @@
 package com.anirudh.spotifysearch.viewModel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,18 +8,27 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anirudh.spotifysearch.data.SearchRepository
 import com.anirudh.spotifysearch.data.model.AlbumDetails
-import com.anirudh.spotifysearch.data.model.AlbumItem
+import com.anirudh.spotifysearch.data.model.Albums
 import com.anirudh.spotifysearch.data.model.ArtistDetail
-import com.anirudh.spotifysearch.data.model.ArtistInfo
+import com.anirudh.spotifysearch.data.model.Artists
 import com.anirudh.spotifysearch.data.model.CategoryType
+import com.anirudh.spotifysearch.data.model.ItemType
 import com.anirudh.spotifysearch.data.model.PlaylistDetail
-import com.anirudh.spotifysearch.data.model.PlaylistItem
+import com.anirudh.spotifysearch.data.model.Playlists
 import com.anirudh.spotifysearch.data.model.SearchResults
 import com.anirudh.spotifysearch.data.model.TrackInfo
-import com.anirudh.spotifysearch.data.model.TrackItem
 import com.anirudh.spotifysearch.data.model.Tracks
+import com.anirudh.spotifysearch.data.roomDB.EntityItemInfo
+import com.anirudh.spotifysearch.data.roomDB.ItemInfoDb
 import com.anirudh.spotifysearch.util.Constants
-import com.anirudh.upstox.data.remote.RetrofitInstance
+import com.anirudh.spotifysearch.util.toAlbumItems
+import com.anirudh.spotifysearch.util.toArtistEntityItems
+import com.anirudh.spotifysearch.util.toArtistItems
+import com.anirudh.spotifysearch.util.toEntityItems
+import com.anirudh.spotifysearch.util.toPlaylistEntityItems
+import com.anirudh.spotifysearch.util.toPlaylistItems
+import com.anirudh.spotifysearch.util.toTrackEntityItems
+import com.anirudh.spotifysearch.util.toTrackItems
 import dagger.Reusable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,6 +59,10 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
     private var _artistsInfo = MutableLiveData<ArtistDetail>()
     val artistsInfo: LiveData<ArtistDetail> = _artistsInfo
 
+    lateinit var db: ItemInfoDb
+
+    var lastQuery = ""
+
     fun getSearchResults(query: String) {
         Log.d("Anirudh", "Outside coroutines")
         viewModelScope.launch(Dispatchers.Default) {
@@ -61,12 +75,71 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
                 if (results != null) {
                     prepareCategoriesList(results)
                 }
+                saveInDb(result.body())
                 _searchResults.postValue(results)
                 Log.d("Anirudh", "$query success")
             } else {
                 _loadingProgressLiveData.postValue(false)
                 Log.d("Anirudh", "$query failure")
             }
+        }
+    }
+
+    fun initializeDb(context: Context) {
+        db = ItemInfoDb(context)
+    }
+
+    private fun saveInDb(results: SearchResults?) {
+        viewModelScope.launch(Dispatchers.IO) {
+            db.ItemInfoDao().clearDb()
+            val list = mutableListOf<EntityItemInfo>()
+            results?.let {
+                list.addAll(it.albums.albumItems.toEntityItems())
+                list.addAll(it.playlists.items.toPlaylistEntityItems())
+                list.addAll(it.tracks.items.toTrackEntityItems())
+                list.addAll(it.artists.items.toArtistEntityItems())
+            }
+            db.ItemInfoDao().insertItems(items = list)
+        }
+    }
+
+    private fun fetchFromDb() {
+        _loadingProgressLiveData.postValue(true)
+        viewModelScope.launch(Dispatchers.IO) {
+            val items = db.ItemInfoDao().getAllItems()
+            val albums = items?.filter {
+                it.itemType == ItemType.ALBUM
+            }?.toAlbumItems()
+
+            val tracks = items?.filter {
+                it.itemType == ItemType.TRACK
+            }?.toTrackItems()
+            val playlists = items?.filter {
+                it.itemType == ItemType.PLAYLIST
+            }?.toPlaylistItems()
+            val artists = items?.filter {
+                it.itemType == ItemType.ARTIST
+            }?.toArtistItems()
+
+            val searchResults = albums?.let { Albums("", it, 0, "", 0, 0, 0) }?.let {
+                artists?.let { it1 -> Artists("", it1, 0, "", 0, 0, 0) }?.let { it2 ->
+                    playlists?.let { it1 -> Playlists("", it1, 0, "", 0, 0, 0) }?.let { it3 ->
+                        tracks?.let { it1 -> Tracks("", it1, 0, "", 0, 0, 0) }?.let { it4 ->
+                            SearchResults(
+                                albums = it,
+                                artists = it2, playlists =
+                                it3,
+                                tracks = it4
+                            )
+                        }
+                    }
+                }
+            }
+            _loadingProgressLiveData.postValue(false)
+            if (searchResults != null) {
+                prepareCategoriesList(searchResults)
+            }
+            _searchResults.postValue(searchResults)
         }
     }
 
@@ -155,6 +228,10 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
 
     override fun onCleared() {
         super.onCleared()
+    }
+
+    fun showLastSearchResults() {
+        fetchFromDb()
     }
 
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -42,8 +43,16 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         setSupportActionBar(toolbar)
         supportActionBar?.title = resources.getString(R.string.search)
         updateApiToken()
+        setupClickListeners()
         setupObservers()
+        viewModel.initializeDb(this)
 
+    }
+
+    private fun setupClickListeners() {
+        binding.btn.setOnClickListener {
+            viewModel.showLastSearchResults()
+        }
     }
 
     private fun setupObservers() {
@@ -70,7 +79,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         // Inflate menu with items using MenuInflator
         val inflater = menuInflater
         inflater.inflate(R.menu.menu, menu)
-        Log.d("Anirudh","setHasOptionsMenu ")
+        Log.d("Anirudh", "setHasOptionsMenu ")
 
         // Initialise menu item search bar
         // with id and take its object
@@ -86,6 +95,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 if (query.isNullOrBlank()) {
                     return true
                 }
+                viewModel.lastQuery = query
                 viewModel.getSearchResults(query)
                 return false
             }
