@@ -45,6 +45,7 @@ fun List<EntityItemInfo>.toArtistItems(): List<ArtistInfo> =
             id = it.id,
             name = it.name,
             type = it.type,
+            images = listOf(Image(0, it.imageUrl, 0)),
             itemType = it.itemType
         )
     }
@@ -55,6 +56,7 @@ fun List<EntityItemInfo>.toPlaylistItems(): List<PlaylistItem> =
             id = it.id,
             name = it.name,
             type = it.type,
+            images = listOf(Image(0, it.imageUrl, 0)),
             itemType = it.itemType
         )
     }

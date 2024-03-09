@@ -3,5 +3,9 @@
     <string name="search">Search</string>
     <string name="query_hint">"Search playlist,track..."</string>
     <string name="show_last_searched_result">Show Last Searched Result</string>
+    <string name="type">Type :</string>
+    <string name="title">Title :</string>
+    <string name="name">Name :</string>
+    <string name="id">Id :</string>
 
 </resources>

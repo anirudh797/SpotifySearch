@@ -99,7 +99,9 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
                 list.addAll(it.tracks.items.toTrackEntityItems())
                 list.addAll(it.artists.items.toArtistEntityItems())
             }
-            db.ItemInfoDao().insertItems(items = list)
+            if (list.isNotEmpty()) {
+                db.ItemInfoDao().insertItems(items = list)
+            }
         }
     }
 

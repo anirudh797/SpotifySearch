@@ -15,44 +15,115 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_id"
-        style="@style/quantity_bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp2"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="2"
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp5"
+        android:layout_marginVertical="@dimen/dp5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv" />
 
     <TextView
-        android:id="@+id/tv_name"
-        style="@style/TextAppearance.Material3.DisplayLarge"
+        android:id="@+id/tv_id_title"
+        style="@style/text_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp4"
+        android:layout_marginTop="@dimen/dp5"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="2"
+        android:text="@string/id"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_id" />
+        app:layout_constraintTop_toBottomOf="@id/divider" />
 
     <TextView
-        android:id="@+id/tv_type"
-        style="@style/TextAppearance.Material3.DisplaySmall"
+        android:id="@+id/tv_id"
+        style="@style/text_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp2"
+        android:layout_marginStart="@dimen/dp5"
+        android:layout_marginTop="@dimen/dp5"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintBottom_toBottomOf="@id/tv_id_title"
+        app:layout_constraintLeft_toRightOf="@id/tv_id_title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
+
+    <View
+        android:id="@+id/divider_1"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp5"
+        android:layout_marginVertical="@dimen/dp5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_id_title" />
+
+    <TextView
+        android:id="@+id/tv_name_title"
+        style="@style/text_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="2"
+        android:text="@string/name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider_1" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/text_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp5"
+        android:layout_marginTop="@dimen/dp5"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintLeft_toRightOf="@id/tv_name_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_name_title"
+        app:layout_constraintTop_toTopOf="@id/tv_name_title" />
+
+
+    <View
+        android:id="@+id/divider_2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp5"
+        android:layout_marginVertical="@dimen/dp5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+
+    <TextView
+        android:id="@+id/tv_type_title"
+        style="@style/text_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="@string/type"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider_2" />
+
+    <TextView
+        android:id="@+id/tv_type"
+        style="@style/text_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp5"
+        android:layout_marginTop="@dimen/dp5"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        app:layout_constraintBottom_toBottomOf="@id/tv_type_title"
+        app:layout_constraintLeft_toRightOf="@id/tv_type_title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider_2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
