@@ -13,7 +13,8 @@ import com.anirudh.spotifysearch.viewModel.SearchViewModel
 class CategoryAdapter(
     private val categories: List<CategoryType>,
     private val viewModel: SearchViewModel,
-    fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
+    private val fragment: Fragment,
+    fragmentActivity: FragmentActivity?) : FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int {
         return categories.size

@@ -66,7 +66,11 @@ fun List<ArtistInfo>.toArtistEntityItems(): List<EntityItemInfo> =
     this.map {
         EntityItemInfo(
             id = it.id,
-            imageUrl = it.images.first().url,
+            imageUrl = if (it.images.isNotEmpty()) {
+                it.images.first().url
+            } else {
+                ""
+            },
             name = it.name,
             type = it.type,
             itemType = it.itemType

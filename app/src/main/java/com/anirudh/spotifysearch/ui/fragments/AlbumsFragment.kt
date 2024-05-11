@@ -2,6 +2,7 @@ package com.anirudh.spotifysearch.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.anirudh.spotifysearch.ui.DetailActivity
 import com.anirudh.spotifysearch.ui.adapters.SearchResultsAdapter
@@ -32,5 +33,19 @@ class AlbumsFragment : SearchResultsFragment() {
 
     override fun getResultsAdapter(): SearchResultsAdapter {
         return adapter
+    }
+
+    override fun onDestroyView() {
+        Log.d("Anirudh","onDestroy View Albums")
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onDestroyOptionsMenu() {
+        Log.d("Anirudh","onDestroy optionsMenu Albums")
+        super.onDestroyOptionsMenu()
     }
 }
