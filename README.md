@@ -11,6 +11,9 @@ Offline support using Room Database.
 
 
 Screenshots
+![SpotifySearch1](https://github.com/anirudh797/SpotifySearch/assets/53581159/f7da7a27-ff1f-4882-8966-75f2dc116710)
+![SpotifySearch2](https://github.com/anirudh797/SpotifySearch/assets/53581159/c453c300-028d-4edc-a7fe-55085ceebbdc)
+
 <!-- Add screenshots of your app here -->
 Technologies Used
 MVVM Architecture
